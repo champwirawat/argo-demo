@@ -1,0 +1,11 @@
+argo-cd:
+  enabled: true
+  server:
+    ingress:
+      enabled: false
+    extraArgs:
+      - --insecure
+  configs:
+    secret:
+      argocdServerAdminPassword: "$2y$10$OfLUB6j0u77YHDOREqyCEeFVxnu4r0TBFISyXhY7CU696JQEEd70G"
+
