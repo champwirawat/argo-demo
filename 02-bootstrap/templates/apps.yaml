@@ -5,10 +5,11 @@ metadata:
   namespace: argocd
 spec:
   # The project the application belongs to.
-  project: k8s-demo
+  project: default
 
   # Destination cluster and namespace to deploy the application
   destination:
+    name: in-cluster
     namespace: argocd
 
   # Source of the application manifests
