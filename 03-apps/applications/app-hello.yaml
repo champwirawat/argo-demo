@@ -16,7 +16,7 @@ spec:
       source:
         repoURL: https://github.com/champwirawat/argo-demo.git
         targetRevision: main
-        path: '03-argocd-apps/manifests/hello'
+        path: '03-apps/manifests/hello'
       destination:
         name: in-cluster
         namespace: hello
