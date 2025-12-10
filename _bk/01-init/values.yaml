@@ -1,0 +1,73 @@
+argo-cd:
+  enabled: true
+  server:
+    ingress:
+      enabled: false
+    extraArgs:
+      - --insecure
+  # เพิ่ม DNS configuration ให้กับ application controller
+  controller:
+    dnsPolicy: ClusterFirst
+    dnsConfig:
+      nameservers:
+        - "10.96.0.10"  # Cluster DNS (CoreDNS)
+        - "8.8.8.8"      # Google DNS as fallback
+        - "8.8.4.4"      # Google DNS secondary
+      options:
+        - name: ndots
+          value: "2"
+        - name: timeout
+          value: "3"
+        - name: attempts
+          value: "3"
+    resources:
+      requests:
+        cpu: 100m
+        memory: 128Mi
+  repoServer:
+    resources:
+      requests:
+        cpu: 100m
+        memory: 128Mi
+      limits:
+        cpu: 500m
+        memory: 512Mi
+    # เพิ่ม DNS configuration ให้กับ repo-server
+    # ใช้ ClusterFirst แต่เพิ่ม Google DNS เป็น fallback สำหรับ external domains
+    dnsPolicy: ClusterFirst
+    dnsConfig:
+      nameservers:
+        - "10.96.0.10"   # Cluster DNS (CoreDNS) - สำหรับ internal services
+        - "8.8.8.8"      # Google DNS - สำหรับ external domains
+        - "8.8.4.4"      # Google DNS secondary
+      searches:
+        - "argocd.svc.cluster.local"
+        - "svc.cluster.local"
+        - "cluster.local"
+      options:
+        - name: ndots
+          value: "2"
+        - name: timeout
+          value: "3"
+        - name: attempts
+          value: "3"
+    livenessProbe:
+      initialDelaySeconds: 60
+      periodSeconds: 20
+      timeoutSeconds: 10
+      failureThreshold: 5
+    readinessProbe:
+      initialDelaySeconds: 30
+      periodSeconds: 15
+      timeoutSeconds: 10
+      failureThreshold: 3
+  # เพิ่ม DNS configuration ให้กับ Redis
+  redis:
+    dnsPolicy: ClusterFirst
+    resources:
+      requests:
+        cpu: 100m
+        memory: 128Mi
+  configs:
+    secret:
+      argocdServerAdminPassword: "$2y$10$OfLUB6j0u77YHDOREqyCEeFVxnu4r0TBFISyXhY7CU696JQEEd70G"
