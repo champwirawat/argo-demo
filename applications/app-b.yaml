@@ -12,3 +12,9 @@ spec:
     path: helm/webbapp
     repoURL: https://github.com/champwirawat/argo-demo.git
     targetRevision: main
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: true
+    syncOptions:
+      - CreateNamespace=true

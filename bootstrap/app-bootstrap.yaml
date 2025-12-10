@@ -12,3 +12,7 @@ spec:
     path: applications
     repoURL: https://github.com/champwirawat/argo-demo.git
     targetRevision: main
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: false
