@@ -9,7 +9,7 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: helm/webbapp
+    path: 03-apps/webapp
     repoURL: https://github.com/champwirawat/argo-demo.git
     targetRevision: main
   syncPolicy:

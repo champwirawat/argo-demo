@@ -6,5 +6,5 @@ helm upgrade -i init . -n argocd --create-namespace
 htpasswd -nbBC 10 "" <password> | tr -d ':\n'
 
 # deploy bootstrap in k8s
-helm upgrade -i bootstrap . -n argocd --create-namespace
+helm upgrade -i bootstrap ./02-bootstrap -n argocd --create-namespace
 ```
