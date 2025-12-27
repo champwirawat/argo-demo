@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: app-a
+  namespace: argocd
+spec:
+  destination:
+    namespace: app-a
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: helm/webbapp
+    repoURL: https://github.com/champwirawat/argo-demo.git
+    targetRevision: main
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: true
+    syncOptions:
+      - CreateNamespace=true
